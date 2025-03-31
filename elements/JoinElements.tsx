@@ -9,12 +9,17 @@ interface JoinElementsProps {
   [x:string]: any;
 }
 
+const useRest = (props: JoinElementsProps) => {
+  const { children, component, itemComponent, separator, ...rest } = props;
+  return rest;
+}
+
 const JoinElements : React.FC<JoinElementsProps> = (props) => {
   const children = useChildren(props.children);
   const El = props.component || "span";
   const ElItem = props.itemComponent || "span";
   const ElSeparator = props.separator;
-  const { ...rest } = props;
+  const rest = useRest(props);
 
   return (
     <El {...rest}>

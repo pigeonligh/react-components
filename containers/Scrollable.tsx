@@ -16,6 +16,13 @@ interface ScrollableProps {
   onScroll?: (event: React.UIEvent<HTMLDivElement>, position: number) => void;
   setupControl?: (control: ScrollController | null) => void;
   disableScroll?: boolean;
+  style?: React.CSSProperties;
+  [x:string]: any;
+}
+
+const useRest = (props: ScrollableProps) => {
+  const { children, height, placeholder, placeholderHeight, onScroll, setupControl, disableScroll, style, ...rest } = props;
+  return rest;
 }
 
 const usePlaceholder = (placeholder: React.ReactNode, placeholderHeight?: string) => {
@@ -66,12 +73,15 @@ const Scrollable: React.FC<ScrollableProps> = (props) => {
     }
   }, [ ref, props.setupControl ]);
 
+  const rest = useRest(props);
+
   return (
     <div
       ref={ref}
       className={styles.scrollable}
-      style={{ height, overflowY: disable ? 'hidden' : 'scroll' }}
+      style={{ height, overflowY: disable ? 'hidden' : 'scroll', ...props.style }}
       onScroll={handleScroll}
+      {...rest}
     >
       {children}
       {placeholder}
