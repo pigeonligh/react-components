@@ -1,0 +1,7 @@
+.scrollable {
+  background-color: black;
+}
+
+.scrollable::-webkit-scrollbar {
+  display: none;
+}
