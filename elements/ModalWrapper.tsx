@@ -1,11 +1,13 @@
 import React from "react";
 
-type Handler = () => void;
+type OpenHandler = (event: React.MouseEvent<HTMLElement>) => void;
+type CloseHandler = () => void;
 
 interface ModalProps {
+  anchorEl: HTMLElement | null;
   open: boolean;
-  handleOpen: Handler;
-  handleClose: Handler;
+  handleOpen: OpenHandler;
+  handleClose: CloseHandler;
 }
 
 type Render = (props: ModalProps) => React.ReactNode;
@@ -18,15 +20,26 @@ interface ModalWrapperProps {
   component?: React.ElementType | string;
   componentProps?: PropsGenerator;
   style?: React.CSSProperties;
+
+  floating?: boolean;
   defaultStyle?: boolean;
 }
 
 const ModalWrapper: React.FC<ModalWrapperProps> = (props) => {
-  const [ open, setOpen ] = React.useState(false);
-  const handleOpen = () => { setOpen(true) };
-  const handleClose = () => { setOpen(false) };
-  const modalProps = { open, handleOpen: handleOpen, handleClose: handleClose };
+  const [ anchorEl, setAnchorEl ] = React.useState<HTMLElement | null>(null);
+  const open = Boolean(anchorEl);
+  const handleOpen = (event: React.MouseEvent<HTMLElement>) => { setAnchorEl(event.currentTarget) };
+  const handleClose = () => { setAnchorEl(null) };
+
+  const modalProps = {
+    anchorEl: anchorEl,
+    open: open, 
+    handleOpen: handleOpen, 
+    handleClose: handleClose
+  };
+
   const propsGenerator = props.componentProps || ((modelProps) => ({
+    anchorEl: modelProps.anchorEl,
     open: modelProps.open,
     onOpen: modelProps.handleOpen,
     onClose: modelProps.handleClose,
@@ -34,7 +47,14 @@ const ModalWrapper: React.FC<ModalWrapperProps> = (props) => {
 
   const El = props.component || 'div';
 
-  const defaultStyle = {
+  const floatingStyle: React.CSSProperties = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  };
+
+  const defaultStyle: React.CSSProperties = {
     width: '60vw',
     backgroundColor: '#202020',
     border: '2px solid #404040',
@@ -48,10 +68,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = (props) => {
       {props.view && props.view(modalProps)}
       <El {...(propsGenerator(modalProps))}>
         <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
+          ...(props.floating ? floatingStyle : {}),
           ...(props.defaultStyle ? defaultStyle : {}),
           ...props.style,
         }}>
