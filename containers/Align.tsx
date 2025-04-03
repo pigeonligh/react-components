@@ -1,7 +1,7 @@
 import React from "react";
 import { useChildren } from "../utils/elements";
 
-interface AlignProps {
+export interface AlignProps {
   children: React.ReactNode | React.ReactNode[];
   width?: string;
   height?: string;
@@ -11,12 +11,7 @@ interface AlignProps {
   [x:string]: any;
 }
 
-const useRest = (props: AlignProps) => {
-  const { children, width, height, vertical, horizontal, style, ...rest } = props;
-  return rest;
-}
-
-const useVerticalStyle = (vertical?: 'top' | 'center' | 'bottom' | boolean) => {
+export const useVerticalStyle = (vertical?: 'top' | 'center' | 'bottom' | boolean) => {
   const value = vertical === true ? 'center' : vertical;
   const ret: React.CSSProperties = {};
   switch (value) {
@@ -46,7 +41,7 @@ const useVerticalStyle = (vertical?: 'top' | 'center' | 'bottom' | boolean) => {
   return ret;
 }
 
-const useHorizontalStyle = (horizontal?: 'left' | 'center' | 'right' | boolean) => {
+export const useHorizontalStyle = (horizontal?: 'left' | 'center' | 'right' | boolean) => {
   const value = horizontal === true ? 'center' : horizontal;
   const ret: React.CSSProperties = {};
   switch (value) {
@@ -74,6 +69,11 @@ const useHorizontalStyle = (horizontal?: 'left' | 'center' | 'right' | boolean) 
       ret.width = '100%';
   }
   return ret;
+}
+
+const useRest = (props: AlignProps) => {
+  const { children, width, height, vertical, horizontal, style, ...rest } = props;
+  return rest;
 }
 
 const Align: React.FC<AlignProps> = (props) => {

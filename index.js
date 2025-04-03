@@ -5,11 +5,15 @@ import Unselectable from './containers/Unselectable';
 import JoinElements from './elements/JoinElements';
 import ModalWrapper from './elements/ModalWrapper';
 
+import SimpleRouter from './routers/SimpleRouter';
+
 export {
   Scrollable,
   Align,
   Unselectable,
 
   JoinElements,
-  ModalWrapper
+  ModalWrapper,
+
+  SimpleRouter
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useChildren } from '../utils/elements';
 
-interface UnselectableProps {
+export interface UnselectableProps {
   children: React.ReactNode | React.ReactNode[];
   component?: React.ElementType | string;
   ignore?: boolean;
@@ -9,18 +9,18 @@ interface UnselectableProps {
   [x:string]: any;
 }
 
-const useRest = (props: UnselectableProps) => {
-  const { children, component, style, ...rest } = props;
-  return rest;
-}
-
-const unselectableStyle = {
+export const unselectableStyle = {
   WebkitTouchCallout: 'none',
   WebkitUserSelect: 'none',
   KhtmlUserSelect: 'none',
   MozUserSelect: 'none',
   msUserSelect: 'none',
   userSelect: 'none',
+}
+
+const useRest = (props: UnselectableProps) => {
+  const { children, component, style, ...rest } = props;
+  return rest;
 }
 
 const Unselectable: React.FC<UnselectableProps> = (props) => {

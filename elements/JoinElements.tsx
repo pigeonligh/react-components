@@ -1,7 +1,7 @@
 import React from "react";
 import { useChildren } from "../utils/elements";
 
-interface JoinElementsProps {
+export interface JoinElementsProps {
   children: React.ReactNode | React.ReactNode[];
   component?: React.ElementType | string;
   itemComponent?: React.ElementType | string;

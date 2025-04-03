@@ -1,20 +1,20 @@
 import React from "react";
 
-type OpenHandler = (event: React.MouseEvent<HTMLElement>) => void;
-type CloseHandler = () => void;
+export type OpenHandler = (event: React.MouseEvent<HTMLElement>) => void;
+export type CloseHandler = () => void;
 
-interface ModalProps {
+export interface ModalProps {
   anchorEl: HTMLElement | null;
   open: boolean;
   handleOpen: OpenHandler;
   handleClose: CloseHandler;
 }
 
-type Render = (props: ModalProps) => React.ReactNode;
+export type Render = (props: ModalProps) => React.ReactNode;
 
-type PropsGenerator = (props: ModalProps) => Object;
+export type PropsGenerator = (props: ModalProps) => Object;
 
-interface ModalWrapperProps {
+export interface ModalWrapperProps {
   view?: Render;
   modal?: Render;
   component?: React.ElementType | string;

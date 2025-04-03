@@ -3,12 +3,12 @@ import { useChildren } from '../utils/elements';
 
 import styles from './Scrollable.module.css';
 
-interface ScrollController {
+export interface ScrollController {
   scrollTo: (position: number, smooth: boolean) => void;
   scrollBy: (delta: number, smooth: boolean) => void;
 }
 
-interface ScrollableProps {
+export interface ScrollableProps {
   children: React.ReactNode | React.ReactNode[];
   height?: string;
   placeholder?: React.ReactNode;
@@ -20,12 +20,7 @@ interface ScrollableProps {
   [x:string]: any;
 }
 
-const useRest = (props: ScrollableProps) => {
-  const { children, height, placeholder, placeholderHeight, onScroll, setupControl, disableScroll, style, ...rest } = props;
-  return rest;
-}
-
-const usePlaceholder = (placeholder: React.ReactNode, placeholderHeight?: string) => {
+export const usePlaceholder = (placeholder: React.ReactNode, placeholderHeight?: string) => {
   if (placeholder) {
     return placeholder;
   }
@@ -33,6 +28,11 @@ const usePlaceholder = (placeholder: React.ReactNode, placeholderHeight?: string
     return <div style={{ height: placeholderHeight, width: '100%' }} />;
   }
   return null;
+}
+
+const useRest = (props: ScrollableProps) => {
+  const { children, height, placeholder, placeholderHeight, onScroll, setupControl, disableScroll, style, ...rest } = props;
+  return rest;
 }
 
 const Scrollable: React.FC<ScrollableProps> = (props) => {
